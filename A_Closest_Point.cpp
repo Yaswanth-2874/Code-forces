@@ -5,7 +5,20 @@ using namespace std;
 #define ll long long
 
 void solve() {
+    int n;
+    cin>>n;
     
+    vector<int> nums(n);
+  
+    for(int i = 0; i < n; i++) {
+        cin>>nums[i];
+    }
+    
+    if(nums[1] - nums[0] == 1 || nums.size() >= 3)
+        cout<<"NO"<<endl;
+    else
+        cout<<"YES"<<endl;
+
 }
 
 int main() {
