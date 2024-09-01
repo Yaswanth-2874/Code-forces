@@ -3,11 +3,11 @@ using namespace std;
 
 #define MOD 1000000007
 #define ll long long
-#define yes cout<<"YES\n"
-#define no cout<<"NO\n"
 
 void solve() {
-    
+    int size;
+    cin>>size;
+
 }
 
 int main() {

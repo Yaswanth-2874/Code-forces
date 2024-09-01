@@ -3,11 +3,18 @@ using namespace std;
 
 #define MOD 1000000007
 #define ll long long
-#define yes cout<<"YES\n"
-#define no cout<<"NO\n"
 
 void solve() {
-    
+    int l, r;
+    cin>>l>>r;
+    if(l % 2 == 0)
+        l++;
+    if(r % 2 == 0)
+        r--;
+    int count = r-l+1;
+    count = ceil(count/2.0);
+    count /= 2;
+    cout<<count<<endl; 
 }
 
 int main() {
@@ -20,3 +27,4 @@ int main() {
     }
     return 0;
 }
+

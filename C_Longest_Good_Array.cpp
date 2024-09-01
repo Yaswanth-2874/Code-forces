@@ -3,11 +3,17 @@ using namespace std;
 
 #define MOD 1000000007
 #define ll long long
-#define yes cout<<"YES\n"
-#define no cout<<"NO\n"
 
 void solve() {
-    
+    int left , right;
+    cin>>left>>right;
+    int size = 0;
+    int difference = 1;
+    while(left <= right) {
+        size++;
+        left += difference++;
+    }
+    cout<<size<<endl;
 }
 
 int main() {
