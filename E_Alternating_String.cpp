@@ -4,8 +4,15 @@ using namespace std;
 #define MOD 1000000007
 #define ll long long
 
-int countReplacements(string& s) {
-
+pair<int, int> findMax(unordered_map<char, int>& odd, unordered_map<char, int>& even){
+    int maxOdd = 0, maxEven = 0;
+    for(auto [_, count] : odd) {
+        maxOdd = max(maxOdd, count);
+    }
+    for(auto [_, count] : even) {
+        maxEven = max(maxEven, count);
+    }
+    return {maxOdd, maxEven};
 }
 
 void solve() {
@@ -13,65 +20,36 @@ void solve() {
     cin>>n;
     string s;
     cin>>s;
-
-    map<int, int> odd;
-    map<int, int> even;
-    multiset<int> freqOdd, freqEven;
-
-    int maxOdd = 0, maxEven = 0;
+    unordered_map<char, int> odd, even;
     int last = n-1;
 
-    for(int i = 0; i < n; i+=2) {
-        even[s[i]]++;
+    for(int i = 0; i < n; i++) {
+        if(i % 2 == 0)
+            even[s[i]]++;
+        else
+            odd[s[i]]++;
     }
-    for(int i = 1; i < n; i+=2) {
-        odd[s[i]]++;
-    }
-    for(auto it : odd) {
-        freqOdd.insert((it.second));
-    }
-    for(auto it : even) {
-        freqEven.insert((it.second));
-    }
-
-    maxOdd = freqOdd.size() ? *freqOdd.rbegin() : 0;
-    maxEven = freqEven.size() ? *freqEven.rbegin() : 0;
-
+    
+    pair<int, int> maxValues = findMax(odd, even);
     if(n % 2 == 0)
-        cout<<(n - maxEven - maxOdd)<<endl;
+        cout<< n - maxValues.first - maxValues.second <<endl;
     else {
-        if(n == 1) {
-            cout<<1<<endl;
-            return;
-        }
-        int mini = INT_MAX;
-        while(last > 0){
-        if(last % 2 == 0) {
-            freqEven.erase(even[s[last]]);
-            freqEven.insert(even[s[last]]-1);
-            even[s[last]]--;
-        }
-        else {
-            freqOdd.erase(odd[s[last]]);
-            freqOdd.insert(odd[s[last]]-1);
-            odd[s[last]]--;
-        }
-         maxOdd = freqOdd.size() ? *freqOdd.rbegin() : 0;
-         maxEven = freqEven.size() ? *freqEven.rbegin() : 0;
-        mini = min(mini, n - maxOdd - maxEven);
-        if(last % 2 == 0) {
-            freqOdd.erase(odd[s[last]]);
-            freqOdd.insert(odd[s[last]]+1);
-            odd[s[last]]++;
-        }
-        else {
-            freqEven.erase(even[s[last]]);
-            freqEven.insert(even[s[last]]+1);
-            even[s[last]]--;
-        }
-        last--;
-        }
-        cout<<mini+1<<endl;
+        int ans = INT_MAX;
+        while(last  >= 0) {
+            if(last % 2 == 0)
+                even[s[last]]--;
+            else
+                odd[s[last]]--;
+            maxValues = findMax(odd, even);
+            // cout<<maxValues.first<<" "<<maxValues.second<<endl;
+            ans = min(ans, n - maxValues.first - maxValues.second);
+            if(last % 2 == 0)
+                odd[s[last]]++;
+            else
+                even[s[last]]++;
+            last--;
+    }
+    cout<<ans<<endl;
     }
 }
 

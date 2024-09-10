@@ -2,18 +2,19 @@
 using namespace std;
 
 #define MOD 1000000007
-#define int long long
+#define ll long long
 #define yes cout<<"YES\n"
 #define no cout<<"NO\n"
 #define full(array) array.begin(), array.end()
-#define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(int num : array) cout<<num<<" "; cout<<endl;
+#define input(array, size) for(int i = 0; i < size; i++)cin>>array[i];
 
 void solve() {
-
+    int a, b;
+    cin>>a>>b;
+    cout<<b-a<<endl;
 }
 
-int32_t main() {
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t;
