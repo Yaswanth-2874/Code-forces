@@ -12,7 +12,19 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        vector<int> nums(n);
+        input(nums);
 
+        int count = 0;
+        for(int i = 0; i < n; i++) {
+            for(int j = i+1; j < n; j++) {
+                if((nums[i] & nums[j]) >= (nums[i] ^ nums[j]))
+                    count++;
+            }
+        }
+        cout<<count<<endl;
     }
 };
 
@@ -27,4 +39,3 @@ int32_t main() {
     }
     return 0;
 }
-

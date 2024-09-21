@@ -7,12 +7,27 @@ using namespace std;
 #define no cout<<"NO\n"
 #define full(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define print(array) for(int num : array) cout<<num<<" "; cout<<endl;
+
+// 1 2 1 3
+// 1 2 1 3
+// 1 2 3
+// 1 2
+// 1
 
 class Solution {
     public:
     void solve() {
+        int n;
+        cin>>n;
+        vector<int> nums(n);
+        input(nums);
+        set<int> uniques(full(nums));
 
+        if(uniques.size() >= 3)
+            cout<<n<<endl;
+        else
+            cout<<n/2 + 1<<endl;
     }
 };
 
@@ -27,4 +42,3 @@ int32_t main() {
     }
     return 0;
 }
-

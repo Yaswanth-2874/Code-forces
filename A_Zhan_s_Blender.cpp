@@ -12,6 +12,13 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        int x, y;
+        cin >> x >> y;
+
+        int mini = min(x, y);
+        cout<< (n + mini - 1 )/ mini <<endl;
 
     }
 };

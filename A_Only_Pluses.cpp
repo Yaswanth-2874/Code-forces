@@ -12,7 +12,29 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int a, b, c;
+        cin >> a >> b >> c;
 
+        priority_queue<int, vector<int>, greater<int>> pq;
+        pq.push(a);
+        pq.push(b);
+        pq.push(c);
+
+        int t = 5;
+        while (t--) {
+            int top = pq.top();
+            pq.pop();
+            top++;
+            pq.push(top);
+        }
+        int ans = 1;
+        t = 3;
+
+        while(t--) {
+            ans *= pq.top();
+            pq.pop();
+        }
+        cout<<ans<<endl;
     }
 };
 

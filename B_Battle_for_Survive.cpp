@@ -12,6 +12,23 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        vector<int> nums(n);
+        input(nums);
+
+        if(nums.size() == 2) {
+            cout<<nums[1] - nums[0]<<endl;
+            return;
+        }
+        
+        int sum = 0;
+        for(int i = 0; i < n - 2; i++)
+            sum += nums[i];
+        nums[n-2] -= sum;
+        cout<<nums[n-1] - nums[n-2]<<endl;
+
+
 
     }
 };

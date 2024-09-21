@@ -7,12 +7,12 @@ using namespace std;
 #define no cout<<"NO\n"
 #define full(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define print(array) for(int num : array) cout<<num<<" "; cout<<endl;
+
 
 class Solution {
     public:
     void solve() {
-
     }
 };
 
@@ -27,4 +27,3 @@ int32_t main() {
     }
     return 0;
 }
-

@@ -12,7 +12,19 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int size;
+        cin>>size;
 
+        vector<int> nums(size);
+        input(nums);
+        map<int, int> freq;
+
+        int count = 0;
+        for(int i = 0; i < size; i++) {
+            nums[i] -= i;
+            count += freq[nums[i]]++;
+        }
+        cout<<count<<endl;
     }
 };
 
@@ -27,4 +39,3 @@ int32_t main() {
     }
     return 0;
 }
-

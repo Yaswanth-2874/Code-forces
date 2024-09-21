@@ -9,10 +9,29 @@ using namespace std;
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 
+int power(int num,int pow) {
+    if(pow == 0)
+        return 1;
+    if(pow == 1)
+        return num;
+            
+    int calculatedPower = power(num, pow/2) % MOD;
+    calculatedPower *= (calculatedPower %MOD);
+    calculatedPower %= MOD;
+        
+    if(pow % 2) {
+        calculatedPower *= (num % MOD);
+        calculatedPower %= MOD;
+    }
+    return calculatedPower;
+}
+
 class Solution {
     public:
     void solve() {
-
+        int n, k;
+        cin >> n >> k;
+        cout<<power(n, k)<<endl;
     }
 };
 
@@ -27,4 +46,3 @@ int32_t main() {
     }
     return 0;
 }
-

@@ -12,7 +12,30 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        vector<int> nums(n);
+        input(nums);
 
+        if(nums[n - 2] > nums[n - 1]) {
+            cout<<-1<<endl;
+            return;
+        }
+
+        if(is_sorted(full(nums))) {
+            cout<<0<<endl;
+            return;
+        }
+
+        int diff = nums[n-2] - nums[n-1];
+        if(diff <= nums[n-2]) {
+            cout<<n-2<<endl;
+            for(int i = 1; i <= n-2; i++) {
+                cout<<i<<" "<<n-1<<" "<<n<<endl;
+            }
+            return;
+        }
+        cout<<-1<<endl;
     }
 };
 
@@ -27,4 +50,3 @@ int32_t main() {
     }
     return 0;
 }
-
