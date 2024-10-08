@@ -13,6 +13,20 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        int sum = 0;
+        bool add = true;
+        for(int i = 0; i < n; i++) {
+            int num;
+            cin >> num;
+            if(add)
+                sum += num;
+            else
+                sum -= num;
+            add = !add;
+        }
+        cout<<sum<<endl;
     }
 };
 

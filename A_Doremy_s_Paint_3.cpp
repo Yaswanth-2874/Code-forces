@@ -8,11 +8,27 @@ using namespace std;
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
 
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        vector<int> nums(n);
+        input(nums);
+        map<int, int> freq;
+        for(int num : nums)
+            freq[num]++;
+        if(freq.size() > 2)
+            no;
+        if(freq.size() < 2)
+            yes;
+        int count1 = n/2, count2 = n - count1;
+        for(auto& [_, f] : freq) {
+            if(f != count1 && f != count2)
+                no;
+        }
+        yes;
     }
 };
 

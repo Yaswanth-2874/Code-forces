@@ -8,11 +8,32 @@ using namespace std;
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
 
 class Solution {
+    int sqrt(int x) {
+        int l=0,r=x,num;
+    
+        while(l<=r){
+             num=(l+r)/2;
+            if ((double)num<x/(double)num)
+                l=num+1;
+            else if((double)num>x/(double)num)
+                r=num-1;
+            else
+                return num;
+        }
+        return l-1;
+    }
     public:
     void solve() {
+        int k;
+        cin >> k;
+
+        int minRoots = sqrt(k);
+        int extraRoots = sqrt(k + minRoots) - sqrt(k);
+
+        cout<<k + minRoots + extraRoots<<endl;
+        
     }
 };
 

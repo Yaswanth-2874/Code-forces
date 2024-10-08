@@ -8,11 +8,34 @@ using namespace std;
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
 
 class Solution {
+    // int maxHigherPower(int n, int k) {
+    //     int count = 0;
+    //     bool lower = false;
+    //     while(n) {
+    //         if(n % k)
+    //             lower = true;
+    //         n /= k;
+    //         count++;
+    //     }
+    //     return count - lower;
+    // }
     public:
     void solve() {
+        int n, k;
+        cin >> n >> k;
+        if(k == 1 || n < k) {
+            cout<<n<<endl;
+            return;
+        }
+        int count = 0;
+        while(n) {
+            count += n % k;
+            n /= k;
+        }
+        cout << count << endl;
+        
     }
 };
 
@@ -27,4 +50,3 @@ int32_t main() {
     }
     return 0; 
 }
-

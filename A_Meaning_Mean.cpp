@@ -13,6 +13,23 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        priority_queue<int, vector<int>, greater<int>> pq;
+        int n;
+        cin >> n;
+        for(int i = 0; i < n; i++){
+            int num;
+            cin >> num;
+            pq.push(num);
+        }
+        while(pq.size() > 1) {
+            int  top = pq.top();
+            pq.pop();
+            int top2 = pq.top();
+            pq.pop();
+            pq.push(top + (top2 - top)/2);
+        }
+        cout<<pq.top()<<endl;
+
     }
 };
 

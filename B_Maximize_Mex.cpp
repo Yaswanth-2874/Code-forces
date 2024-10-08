@@ -13,6 +13,23 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n, x;
+        cin >> n >>  x;
+        map<int, int> freq;
+        for(int i = 0; i < n; i++) {
+            int num;
+            cin >> num;
+            freq[num]++;
+        }
+        for(int i = 0; i <= n * 2 + 1; i++) {
+            if(freq[i] > 1) {
+                int nxtNumber = i + x;
+                freq[nxtNumber] += freq[i] - 1;
+                freq[i] = 1;
+            }
+            if(freq[i] == 0)
+                pn(i);
+        }
     }
 };
 

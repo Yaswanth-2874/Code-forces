@@ -8,7 +8,6 @@ using namespace std;
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
 
 class Solution {
     public:
