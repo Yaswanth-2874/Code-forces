@@ -2,51 +2,63 @@
 using namespace std;
 
 #define MOD 1000000007
-#define ll long long
-#define yes cout<<"YES\n"
-#define no cout<<"NO\n"
-#define full(array) array.begin(), array.end()
-#define input(array, size) for(int i = 0; i < size; i++)cin>>array[i];
+#define int long long
+#define yes {cout<<"YES\n"; return;}
+#define no {cout<<"NO\n"; return;}
+#define all(array) array.begin(), array.end()
+#define input(array) for(auto& d : array)cin>>d;
+#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define pn(num){cout<<num<<endl; return;}
+#define minHeap(var) var, vector<var>, greater<var>
 
-void solve() {
-    int days;
-    cin>>days;
-    vector<vector<pair<int, int>>> friends(3, vector<pair<int, int>> (days));
-
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < days; j++) {
-            int num;
-            cin>>num;
-            friends[i][j] = {num, j};
+class Solution {
+    void fill(vector<pair<int, int>>& activity, int n) {
+        for(int i = 0; i < n; i++) {
+            int people;
+            cin >> people;
+            activity.push_back({people, i+1});
         }
     }
+    public:
+    void solve() {
+        int n;
+        cin >> n;
+        vector<pair<int, int>> swim, movie, board;
+        
+        fill(swim, n);
+        fill(movie, n);
+        fill(board, n);
 
-    for(auto& day : friends) {
-        sort(full(day), greater<pair<int, int>> ());
-    }
+        sort(all(swim), greater<pair<int, int>> ());
+        sort(all(movie), greater<pair<int, int>> ());
+        sort(all(board), greater<pair<int, int>> ());
 
-    int ans = 0;
+        int maxFun = 0;
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                for(int k = 0; k < 3; k++) {
+                    auto [fun1, day1] = swim[i];
+                    auto [fun2, day2] = movie[j];
+                    auto [fun3, day3] = board[k];
 
-    for(int i = 0; i < 3; i++) {
-        for(int j = 0; j < 3; j++) {
-            for(int k = 0; k < 3; k++) {
-                if(friends[0][i].second != friends[1][j].second && friends[1][j].second != friends[2][k].second && friends[0][i].second != friends[2][k].second) {
-                    ans = max(ans , friends[0][i].first + friends[1][j].first + friends[2][k].first);}
+                    if(day1 == day2 || day2 == day3 || day3 == day1)
+                        continue;
+                    maxFun = max(maxFun, fun1+fun2+fun3);
+                }
             }
         }
+        pn(maxFun);
     }
-    cout<<ans<<endl;
-    
+};
 
-}
-
-int main() {
+int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t;
+    int t = 1;
     cin >> t;
     while (t--) {
-        solve();
+        Solution obj;
+        obj.solve();
     }
-    return 0;
+    return 0; 
 }

@@ -15,7 +15,21 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        
+        string s, t;
+        cin >> s >> t;
+        if(t.size() < s.size())
+            swap(t, s);
+        int operations = 0;
+        int common = 0;
+        for(int i = 0; i < s.size(); i++) {
+            if(s[i] != t[i])
+                break;
+            common++;
+        }
+        operations = s.size() + t.size();
+        operations -= common;
+        operations += common > 0;
+        cout<<operations<<endl;
     }
 };
 

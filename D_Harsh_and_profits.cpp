@@ -9,13 +9,13 @@ using namespace std;
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
-#define minHeap(var) var, vector<var>, greater<var>
-
 
 class Solution {
     public:
     void solve() {
-        
+        int d;
+        cin >> d;
+        cout<<(d * (d - 1))/2<<endl;
     }
 };
 

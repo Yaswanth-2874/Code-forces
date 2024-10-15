@@ -11,11 +11,20 @@ using namespace std;
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
 
-
+// 1 2 3
+// 1 3
 class Solution {
     public:
     void solve() {
-        
+        int n, x;
+        cin >> n >> x;
+        vector<int> nums(n);
+        input(nums);
+        int sum = accumulate(all(nums), 0);
+        int maxElement = *max_element(all(nums));
+        sum = (sum + x - 1)/x;
+
+        cout<<max(sum, maxElement)<<endl;
     }
 };
 

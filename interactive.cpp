@@ -1,18 +1,21 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define MOD 1000000007
 #define int long long
-#define yes {cout<<"YES\n"; return;}
-#define no {cout<<"NO\n"; return;}
-#define all(array) array.begin(), array.end()
-#define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
+#define printAns(ans) {cout<<"! "<<ans<<endl; return;}
+
 
 class Solution {
+    int query(int a, int b) {
+        cout<<"? "<<a<<" "<<b<<endl;
+        cout.flush();
+        int res;
+        cin >> res;
+        return res;
+    }
     public:
     void solve() {
+
     }
 };
 

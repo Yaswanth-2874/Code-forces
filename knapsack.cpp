@@ -11,22 +11,34 @@ using namespace std;
 
 class Solution {
     int maxWeight;
+    vector<vector<int>> memo;
 
     int maxProfit(vector<int>& weights, vector<int>& profits, int index, int currentWeight) {
         // BaseCase
-        if(currentWeight > maxWeight)
+        if(index >= weights.size())
             return 0;
+        if(memo[index][currentWeight] != -1)
+            return memo[index][currentWeight];
 
-        int pick = profits[index] + maxProfit(weights, profits, index + 1, currentWeight + weights[index]);
         int dontPick = maxProfit(weights, profits, index + 1, currentWeight);
+        int pick = 0;
+        if(currentWeight + weights[index] <= maxWeight)
+            pick = maxProfit(weights, profits, index+1, currentWeight + weights[index]) + profits[index];
 
-        return max(pick, dontPick);
+        return memo[index][currentWeight] = max(pick, dontPick);
     }
     public:
     void solve() {
-        vector<int> weights = {10, 18, 5};
-        vector<int> profits = {25, 15, 10};
-        maxWeight = 20;
+        int size;
+        cin >> size >> maxWeight;
+
+        vector<int> weights(size);
+        vector<int> profits(size);
+
+        input(weights);
+        input(profits);
+
+        memo = vector<vector<int>> (weights.size(), vector<int> (maxWeight, -1));
 
         cout<<maxProfit(weights, profits, 0, 0);
     }

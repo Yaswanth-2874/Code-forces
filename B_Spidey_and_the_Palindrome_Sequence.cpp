@@ -9,12 +9,30 @@ using namespace std;
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
-#define minHeap(var) var, vector<var>, greater<var>
-
 
 class Solution {
     public:
     void solve() {
+        string st;
+        cin >> st;
+        map<char, int> freq;
+        for(auto& ch : st) {
+            freq[ch]++;
+        }
+        int prevFreq = -1;
+        for(auto& [ch, fre] : freq) {
+            if(prevFreq == -1)
+                prevFreq = fre;
+            if(fre != prevFreq)
+                pn(-1);
+            prevFreq = fre;
+        }
+        cout<<prevFreq<<endl;
+        for(auto& [ch, fre] : freq) {
+            while(fre--)
+                cout<<ch;
+        }
+        cout<<endl;
         
     }
 };

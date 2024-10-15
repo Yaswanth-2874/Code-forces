@@ -9,13 +9,25 @@ using namespace std;
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
-#define minHeap(var) var, vector<var>, greater<var>
-
 
 class Solution {
     public:
     void solve() {
-        
+        string num;
+        cin >> num;
+        int n = num.size();
+        if(num.size() == 1)
+            no;
+        if(num[n-1] != num[n-2])
+            no;
+        int current = num[n-2];
+
+        for(int i = n-3; i >= 0; i--) {
+            if(num[i] - '0' > current)
+            no;
+            current = min((int)(num[i] - '0'), current);
+        }
+        yes;
     }
 };
 
