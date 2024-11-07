@@ -14,9 +14,31 @@ using namespace std;
 #define exists(map, num) map.find(num) != map.end()
 #pragma endregion
 
+//Please no edge cases, this seems easy
+
 class Solution {
     public:
     void solve() {
+        int n, k;
+        cin >> n >> k;
+
+        if(k >= n)
+            pn(1);
+
+        int ans = n;
+
+        for(int i = 1; i*i <= n; i++) {
+            if(n % i == 0) {
+                // cout<<"Need "<<i<<" boxes of "<<n/i<<" shovels"<<endl;
+                if(i <= k)
+                    ans = min(n/i, ans);
+                if(n/i <= k)
+                    ans = min(i, ans);
+            }
+        }
+
+        cout<<ans<<endl;
+        
     }
 };
 

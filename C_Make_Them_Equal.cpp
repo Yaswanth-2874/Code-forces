@@ -23,13 +23,13 @@ class Solution {
 
         set<int> unequal ;
         int index = 1;
-        int lastSeen = -1;
+        int seen = -1;
 
         for(auto& letter : original) {
             if(letter != target) {
                 unequal.insert(index);
             } else {
-                lastSeen = index;
+                seen = index;
             }
             index++;
         }
@@ -42,27 +42,27 @@ class Solution {
             cout<<1<<endl;
             pn(size);
         }
-        if(lastSeen == -1) {
+        if(seen == -1) {
             cout<<2<<endl;
             cout<<size - 1<<" "<<(size)<<endl;
 
             return;
         }
-        int nextSeen = *unequal.lower_bound(lastSeen);
+        int nextSeen = *unequal.lower_bound(seen);
         if(nextSeen == size) {
             cout<<1<<endl;
             pn(size - 1);
         }
         int factors = 0;
-        auto it = unequal.lower_bound(lastSeen);
+        auto it = unequal.lower_bound(seen);
         while(it != unequal.end()) {
-            if(*it % lastSeen == 0)
+            if(*it % seen == 0)
                 factors++;
             it++;
         }
         if(factors == 0) {
             cout<<1<<endl;
-            pn(lastSeen);
+            pn(seen);
         }
         cout<<2<<endl;
         cout<<size - 1<<" "<<(size)<<endl;

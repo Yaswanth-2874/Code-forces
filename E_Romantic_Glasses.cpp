@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#pragma region Macros
 #define MOD 1000000007
 #define int long long
 #define yes {cout<<"YES\n"; return;}
@@ -11,12 +10,34 @@ using namespace std;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#pragma endregion
+
+
+// TESTING TO SEE IF I GET TLE USING UNORDERED_SET (Yes TLE ON using unordered_set)
 
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        unordered_set<int> unique;
+        int sum = 0;
+        bool ans = false;
+
+        for(int i = 0; i < n; i++) {
+            int num;
+            cin >> num;
+            if(i%2 == 0)
+                sum += num;
+            else
+                sum -= num;
+            if(unique.find(sum) != unique.end() || sum == 0)
+                ans = true;
+            unique.insert(sum);
+        }
+
+        if(ans)
+            yes;
+        no;        
     }
 };
 
@@ -31,3 +52,4 @@ int32_t main() {
     }
     return 0; 
 }
+

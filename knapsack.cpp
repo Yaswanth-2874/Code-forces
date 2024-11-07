@@ -16,7 +16,7 @@ class Solution {
     int maxProfit(vector<int>& weights, vector<int>& profits, int index, int currentWeight) {
         // BaseCase
         if(index >= weights.size())
-            return 0;
+            return  0;
         if(memo[index][currentWeight] != -1)
             return memo[index][currentWeight];
 

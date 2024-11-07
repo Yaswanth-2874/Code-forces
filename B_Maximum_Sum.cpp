@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#pragma region Macros
 #define MOD 1000000007
 #define int long long
 #define yes {cout<<"YES\n"; return;}
@@ -11,12 +10,32 @@ using namespace std;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#pragma endregion
+
+// If i can delete from left and right side only, the best approach would be a sliding window one
 
 class Solution {
     public:
     void solve() {
+        int n, k;
+        cin >> n >> k;
+        vector<int> nums(n);
+        input(nums);
+        int left = 0, right = n-1;
+        sort(all(nums));
+        int currentSum = accumulate(all(nums), 0LL);
+
+        while(k--) {
+            currentSum -= nums[right--];
+        }
+        
+        int maxSum = currentSum;
+        while(++right < n) {
+            currentSum += nums[right];
+            currentSum -= nums[left++];
+            currentSum -= nums[left++];
+            maxSum = max(maxSum, currentSum);
+        }
+        cout<<maxSum<<endl;        
     }
 };
 
@@ -31,3 +50,4 @@ int32_t main() {
     }
     return 0; 
 }
+

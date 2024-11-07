@@ -17,6 +17,29 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+
+        vector<int> entry(n), exit(n);
+        input(entry);
+        input(exit);
+        set<int> skipped;
+
+        int left2 = 0, fines = 0;
+
+        for(int left1 = 0; left1 < n; left1++) {
+            if(skipped.find(entry[left1]) != skipped.end())
+                continue;
+            while(left2 < n && entry[left1] != exit[left2]) {
+                skipped.insert(exit[left2++]);
+                fines++;
+            }
+            if(left2 >= n)
+                break;
+            left2++;
+
+        }
+        pn(fines)
     }
 };
 
@@ -24,7 +47,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

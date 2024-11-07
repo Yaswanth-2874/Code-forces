@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#pragma region Macros
 #define MOD 1000000007
 #define int long long
 #define yes {cout<<"YES\n"; return;}
@@ -11,12 +10,13 @@ using namespace std;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#pragma endregion
+
 
 class Solution {
     public:
     void solve() {
+        for(int i = 1; i <= 31; i++)
+            cout<<(1ll<<i)-1<<", ";
     }
 };
 
@@ -31,3 +31,4 @@ int32_t main() {
     }
     return 0; 
 }
+

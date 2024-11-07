@@ -17,6 +17,28 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n, money;
+        cin >> n >> money;
+        vector<int> flowers(n);
+
+        input(flowers);
+        int left = 0;
+
+        sort(all(flowers));
+        int maxMoney = money, maxSpentMoney = 0;
+
+        for(int right = 0; right < n; right++) {
+            while(flowers[right] - flowers[left] > 1) {
+                money += flowers[left++];
+            }
+            money -= flowers[right];
+            while(money < 0) {
+                money += flowers[left++];
+            }
+            int spentMoney = maxMoney - money;
+            maxSpentMoney = max(maxSpentMoney, spentMoney);
+        }
+        pn(maxSpentMoney);
     }
 };
 

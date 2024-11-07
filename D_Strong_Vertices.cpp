@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#pragma region Macros
 #define MOD 1000000007
 #define int long long
 #define yes {cout<<"YES\n"; return;}
@@ -11,12 +10,33 @@ using namespace std;
 #define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#pragma endregion
+
+// Edge between u and v exists if au - av >= bu - bv
+// au - bu >= bu - bv
+// Simply find the max element (au - bu) and occurances of it
 
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+
+        vector<int> a(n), b(n), c(n);
+        input(a);
+        input(b);
+
+        for(int i = 0; i < n; i++)
+            c[i] = a[i] - b[i];
+
+        int maxC = *max_element(all(c));
+
+        vector<int> ans;
+        for(int i = 0; i < n; i++) {
+            if(c[i] == maxC)
+                ans.push_back(i+1);
+        }
+        cout<<ans.size()<<endl;
+        print(ans)
     }
 };
 
@@ -31,3 +51,4 @@ int32_t main() {
     }
     return 0; 
 }
+
