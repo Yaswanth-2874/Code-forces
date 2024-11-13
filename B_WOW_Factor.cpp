@@ -17,20 +17,28 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n, x;
-        cin >> n >> x;
+        string st;
+        cin >> st;
+        char prev = '#';
+        vector<int> prefix;
 
-        vector<int> v(n);
-        input(v);
+        int count = 0;
+        for(auto& ch : st) {
+            if(ch == prev && ch == 'v')
+                count++;
+            prefix.push_back(count);
+            prev = ch;
+        }
+        int occurances = 0;
 
-        int totalCars = accumulate(all(v), 0ll);
-        int maxModel = *max_element(all(v));
-
-        if(maxModel * x >= totalCars)
-            pn(maxModel);
-
-        // if control reaches this, then it means that some more cars are left over
-        pn((totalCars + x - 1) / x)
+        for(int i = 2; i < (int)st.size() - 2; i++) {
+            if(st[i] == 'o') {
+                int prevWs = prefix[i-1];
+                int nextWs = prefix[st.size() - 1] - prefix[i];
+                occurances += prevWs * nextWs;
+            }
+        }
+        pn(occurances)
     }
 };
 
@@ -38,7 +46,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

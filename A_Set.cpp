@@ -17,20 +17,10 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n, x;
-        cin >> n >> x;
+        int l, r, k;
+        cin >> l >> r >> k;
 
-        vector<int> v(n);
-        input(v);
-
-        int totalCars = accumulate(all(v), 0ll);
-        int maxModel = *max_element(all(v));
-
-        if(maxModel * x >= totalCars)
-            pn(maxModel);
-
-        // if control reaches this, then it means that some more cars are left over
-        pn((totalCars + x - 1) / x)
+        cout<<max((r/k)-l + 1, 0ll)<<endl;
     }
 };
 

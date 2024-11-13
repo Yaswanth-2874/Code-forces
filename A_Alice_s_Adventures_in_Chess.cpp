@@ -17,20 +17,30 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n, x;
-        cin >> n >> x;
+        int n, a, b;
+        cin >> n >> a >> b;
 
-        vector<int> v(n);
-        input(v);
+        int x = 0, y = 0;
+        string st;
+        cin >> st;
 
-        int totalCars = accumulate(all(v), 0ll);
-        int maxModel = *max_element(all(v));
+        int trys = 100;
+        while(trys--) {
+            for(char& ch : st) {
+                if(ch == 'N')
+                    y++;
+                if(ch == 'E')
+                    x++;
+                if(ch == 'W')
+                    x--;
+                if(ch == 'S')
+                    y--;
+                if(x == a && y == b)
+                    yes;
+            }
+        }
 
-        if(maxModel * x >= totalCars)
-            pn(maxModel);
-
-        // if control reaches this, then it means that some more cars are left over
-        pn((totalCars + x - 1) / x)
+        no;
     }
 };
 

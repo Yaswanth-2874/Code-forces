@@ -14,23 +14,30 @@ using namespace std;
 #define exists(map, num) map.find(num) != map.end()
 #pragma endregion
 
+// ai = b(i) + c for 0 based index
+// require mex
+
+
 class Solution {
     public:
     void solve() {
-        int n, x;
-        cin >> n >> x;
+        int n, b, c;
+        cin >> n >> b >> c;
 
-        vector<int> v(n);
-        input(v);
+        if(c > n-1)
+            pn(n);
 
-        int totalCars = accumulate(all(v), 0ll);
-        int maxModel = *max_element(all(v));
-
-        if(maxModel * x >= totalCars)
-            pn(maxModel);
-
-        // if control reaches this, then it means that some more cars are left over
-        pn((totalCars + x - 1) / x)
+        if(b == 0) {
+            // ALl terms are equal
+            if(c == n-1)
+                pn(n-1);
+            if(c == n-2)
+                pn(n-1);
+            pn(-1);
+        }
+        
+        int t = (n - 1 - c)/b + 1;
+        pn(n - t);
     }
 };
 

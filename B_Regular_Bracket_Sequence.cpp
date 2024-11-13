@@ -17,20 +17,23 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n, x;
-        cin >> n >> x;
+        string st;
+        cin >> st;
+        int openings = 0;
+        int maxValidSize = 0;
 
-        vector<int> v(n);
-        input(v);
+        for(char& ch : st) {
+            if(ch == '(')
+                openings++;
+            else {
+                if(openings) {
+                    openings--;
+                    maxValidSize += 2;
+                }
+            }
+        }
 
-        int totalCars = accumulate(all(v), 0ll);
-        int maxModel = *max_element(all(v));
-
-        if(maxModel * x >= totalCars)
-            pn(maxModel);
-
-        // if control reaches this, then it means that some more cars are left over
-        pn((totalCars + x - 1) / x)
+        pn(maxValidSize)
     }
 };
 
@@ -38,7 +41,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

@@ -15,26 +15,42 @@ using namespace std;
 #pragma endregion
 
 class Solution {
+    queue<int> storage;
+
+    void reverse(stack<int>& st) {
+        if(st.empty())
+            return;
+
+        int top = st.top();
+        st.pop();
+        storage.push(top);
+        reverse(st);
+
+        int front = storage.front();
+        storage.pop();
+
+        cout<<front<<" ";
+        st.push(front);
+
+    }
     public:
     void solve() {
-        int n, x;
-        cin >> n >> x;
+        int n;
+        cin >> n;
+        stack<int> st;
 
-        vector<int> v(n);
-        input(v);
+        for(int i = 0; i < n; i++) {
+            int num;
+            cin >> num;
+            st.push(num);
+        }
 
-        int totalCars = accumulate(all(v), 0ll);
-        int maxModel = *max_element(all(v));
-
-        if(maxModel * x >= totalCars)
-            pn(maxModel);
-
-        // if control reaches this, then it means that some more cars are left over
-        pn((totalCars + x - 1) / x)
+        reverse(st);
+        cout<<endl;
     }
 };
 
-int32_t main() {
+signed main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
