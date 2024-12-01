@@ -18,37 +18,26 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    int minimizeCost(int k, vector<int>& arr) {
-        vector<int> minCostIndexWise(k, INT_MAX);
-        int n = arr.size();
-        
-        minCostIndexWise[0] = 0;
-        
-        for(int i = n-2; i >= 0; i--) {
-            int minCost = INT_MAX;
-            
-            for(int inc = 1; i+inc < n && inc <= k; inc++) {
-                int currCost = minCostIndexWise[inc - 1] + abs(arr[i] - arr[i + inc]);
-                minCost = min(minCost, currCost);
-            }
-            
-            for(int j = k-1; j >= 1; j--) {
-                minCostIndexWise[j] = minCostIndexWise[j-1];
-            }
-
-            print(minCostIndexWise);
-            minCostIndexWise[0] = minCost;
-        }
-        
-        return minCostIndexWise[0];
-    }
     public:
     void solve() {
-        int n, k;
-        cin >> n >> k;
+        int n;
+        cin >> n;
 
-        array(int, v, n);
-        cout<<minimizeCost(k, v);
+        if(n % 2 == 0) {
+            // Ill get a square pattern
+            int side = n/2;
+            side++; // because if line is of size n, n+1 points are contained
+            pn(side * side);
+        }
+
+        // for odd numbers, i get a pattern consisting of multiple + signs
+        // number of plus signs = n+1/2 square
+        
+        int row1 = (n+1)/2;
+        int row2 = row1 + 1;
+
+        int ans = 2 * row1 * row2;
+        pn(ans)
     }
 };
 

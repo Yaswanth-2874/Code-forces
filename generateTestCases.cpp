@@ -12,22 +12,28 @@ using namespace std;
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
 #define exists(map, num) map.find(num) != map.end()
-#define array(type, name, size) vector<type> name(size); input(name);
-#define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
-#define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
+#define array(name, size) vector<int> v(size); input(v);
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
+        
+        int l = rand() % 10000 + 1;
+        int r = rand() % 10000 + l;
+
+        cout<<l<<" "<<r<<endl;
     }
 };
 
+
 int32_t main() {
+    srand(static_cast<unsigned int>(time(0)));
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t = 1;
+    int t = 100;
     cin >> t;
+    cout<<t<<endl;
     while (t--) {
         Solution obj;
         obj.solve();

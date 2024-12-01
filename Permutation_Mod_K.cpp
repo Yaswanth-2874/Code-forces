@@ -18,37 +18,32 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    int minimizeCost(int k, vector<int>& arr) {
-        vector<int> minCostIndexWise(k, INT_MAX);
-        int n = arr.size();
-        
-        minCostIndexWise[0] = 0;
-        
-        for(int i = n-2; i >= 0; i--) {
-            int minCost = INT_MAX;
-            
-            for(int inc = 1; i+inc < n && inc <= k; inc++) {
-                int currCost = minCostIndexWise[inc - 1] + abs(arr[i] - arr[i + inc]);
-                minCost = min(minCost, currCost);
-            }
-            
-            for(int j = k-1; j >= 1; j--) {
-                minCostIndexWise[j] = minCostIndexWise[j-1];
-            }
-
-            print(minCostIndexWise);
-            minCostIndexWise[0] = minCost;
-        }
-        
-        return minCostIndexWise[0];
-    }
     public:
     void solve() {
         int n, k;
         cin >> n >> k;
 
-        array(int, v, n);
-        cout<<minimizeCost(k, v);
+        // If the remainder is 1, then it is not possible
+        if(k == 1)
+            pn(-1);
+
+        if(n % k == 1 && k == 2)
+            pn(-1);
+        
+        
+        if(n % k != 1) {
+            cout << n << " ";
+            for(int i = 1; i <= n-1; i++) {
+                cout<<i<<" ";
+            }
+            cout<<endl;
+            return;
+        }
+
+        cout << n-1 <<" "<<n<<" ";
+        for(int i = 1; i < n-1; i++)
+            cout<<i<<" ";
+        cout<<endl;
     }
 };
 
@@ -56,7 +51,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

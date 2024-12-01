@@ -18,37 +18,33 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    int minimizeCost(int k, vector<int>& arr) {
-        vector<int> minCostIndexWise(k, INT_MAX);
-        int n = arr.size();
-        
-        minCostIndexWise[0] = 0;
-        
-        for(int i = n-2; i >= 0; i--) {
-            int minCost = INT_MAX;
-            
-            for(int inc = 1; i+inc < n && inc <= k; inc++) {
-                int currCost = minCostIndexWise[inc - 1] + abs(arr[i] - arr[i + inc]);
-                minCost = min(minCost, currCost);
-            }
-            
-            for(int j = k-1; j >= 1; j--) {
-                minCostIndexWise[j] = minCostIndexWise[j-1];
-            }
-
-            print(minCostIndexWise);
-            minCostIndexWise[0] = minCost;
-        }
-        
-        return minCostIndexWise[0];
-    }
     public:
     void solve() {
-        int n, k;
-        cin >> n >> k;
+        int n, m, k;
+        cin >> n >> m >> k;
 
         array(int, v, n);
-        cout<<minimizeCost(k, v);
+        priority_queue<int> pq;
+        if(n == 1)
+            pn(1);
+
+        for(int i = 1; i < n; i++) {
+            int gap = v[i] - v[i-1];
+            pq.push(gap);
+        }
+        int ans = 0;
+
+        for(int i = 1; i < k; i++) {
+            pq.pop();
+            ans += 1;
+        }
+
+        while(!pq.empty()) {
+            ans += pq.top();
+            pq.pop();
+        }
+
+        pn(ans + 1);
     }
 };
 

@@ -1,12 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class DisjointSet {
+    class DisjointSet {
+        vector<int> parent, size;
+        public:
+        DisjointSet(int n) {
+            size.resize(n, 1);
+            for(int i = 0; i < n; i++)
+                parent.push_back(i);
+        }
+        int findParent(int node) {
+            if(node == parent[node])
+                return node;
+            return parent[node] = findParent(parent[node]);
+        }
+        bool unionMerge(int nodeA, int nodeB) {
+            int parentA = findParent(nodeA);
+            int parentB = findParent(nodeB);
+
+            if(parentA == parentB)
+                return false;
+            
+            if(size[parentA] >= size[parentB]) {
+                size[parentA] += size[parentB];
+                parent[parentB] = parentA;
+            } else {
+                size[parentB] += size[parentA];
+                parent[parentA] = parentB;
+            }
+
+            return true;
+        }
+        int findSize(int nodeA) {
+            int parentA = findParent(nodeA);
+            return size[parentA];
+        }
+    };
+    
+class DisjointSet2 {
     vector<int> parent;
     vector<int> ranks;
     vector<int> sizes;
     public:
-    DisjointSet(int n) {
+    DisjointSet2(int n) {
         parent.resize(n+1); //for 1 based indexing
         ranks.resize(n+1, 0);
         sizes.resize(n+1, 1);

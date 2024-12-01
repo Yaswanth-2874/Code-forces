@@ -17,38 +17,45 @@ using namespace std;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
 #pragma endregion
 
-class Solution {
-    int minimizeCost(int k, vector<int>& arr) {
-        vector<int> minCostIndexWise(k, INT_MAX);
-        int n = arr.size();
-        
-        minCostIndexWise[0] = 0;
-        
-        for(int i = n-2; i >= 0; i--) {
-            int minCost = INT_MAX;
-            
-            for(int inc = 1; i+inc < n && inc <= k; inc++) {
-                int currCost = minCostIndexWise[inc - 1] + abs(arr[i] - arr[i + inc]);
-                minCost = min(minCost, currCost);
-            }
-            
-            for(int j = k-1; j >= 1; j--) {
-                minCostIndexWise[j] = minCostIndexWise[j-1];
-            }
+// demn silly mistake
 
-            print(minCostIndexWise);
-            minCostIndexWise[0] = minCost;
+class Solution {
+    vector<int> memo;
+    int findMaxNumber(int prev, int index, vector<int>& v) {
+        if(index >= v.size() || prev >= v[index]) {
+            return 0;
         }
+
+        if(memo[index] != -1)
+            return memo[index];
         
-        return minCostIndexWise[0];
+        int maxChoice = 0;
+        
+        for(int i = 2*index; i < v.size(); i+= index) {
+            int pick = findMaxNumber(v[index], i, v);
+            maxChoice = max(maxChoice, pick);
+        }
+
+        return memo[index] = 1 + maxChoice;
     }
     public:
     void solve() {
-        int n, k;
-        cin >> n >> k;
+        int n;
+        cin >> n;
 
-        array(int, v, n);
-        cout<<minimizeCost(k, v);
+        vector<int> v(n+1, -69);
+        memo.resize(n+1, -1);
+        
+        for(int i = 1; i <= n; i++) {
+            cin >> v[i];
+        }
+
+        int ans = 0;
+        for(int i = 1; i <= n; i++) {
+            ans = max(ans, findMaxNumber(-69, i, v));
+        }
+
+        pn(ans);
     }
 };
 
@@ -56,7 +63,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

@@ -18,37 +18,40 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    int minimizeCost(int k, vector<int>& arr) {
-        vector<int> minCostIndexWise(k, INT_MAX);
-        int n = arr.size();
-        
-        minCostIndexWise[0] = 0;
-        
-        for(int i = n-2; i >= 0; i--) {
-            int minCost = INT_MAX;
-            
-            for(int inc = 1; i+inc < n && inc <= k; inc++) {
-                int currCost = minCostIndexWise[inc - 1] + abs(arr[i] - arr[i + inc]);
-                minCost = min(minCost, currCost);
-            }
-            
-            for(int j = k-1; j >= 1; j--) {
-                minCostIndexWise[j] = minCostIndexWise[j-1];
-            }
+    vector<vector<int>> memo;
 
-            print(minCostIndexWise);
-            minCostIndexWise[0] = minCost;
-        }
+    int findBestTeam(int index, int prevRow, vector<vector<int>>& rows) {
+        if(index >= rows[0].size())
+            return 0;
+        if(memo[prevRow][index] != -1)
+            return memo[prevRow][index];
         
-        return minCostIndexWise[0];
+        int ans = 0;
+
+        if(prevRow != 0) {
+            ans = max(ans, rows[0][index] + findBestTeam(index+1, 0, rows));
+            ans = max(ans, rows[0][index] + findBestTeam(index+2, 2, rows));
+        }
+        if(prevRow != 1) {
+            ans = max(ans, rows[1][index] + findBestTeam(index+1, 1, rows));
+            ans = max(ans, rows[1][index] + findBestTeam(index+2, 2, rows));
+        }
+
+        return memo[prevRow][index] = ans;
     }
     public:
     void solve() {
-        int n, k;
-        cin >> n >> k;
+        int n;
+        cin >> n;
 
-        array(int, v, n);
-        cout<<minimizeCost(k, v);
+        vector<vector<int>> rows(2, vector<int> (n));
+        memo = vector<vector<int>> (3, vector<int> (n, -1));
+
+        input(rows[0]);
+        input(rows[1]);
+
+        int ans = findBestTeam(0, 2, rows);
+        pn(ans);        
     }
 };
 

@@ -18,37 +18,23 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    int minimizeCost(int k, vector<int>& arr) {
-        vector<int> minCostIndexWise(k, INT_MAX);
-        int n = arr.size();
-        
-        minCostIndexWise[0] = 0;
-        
-        for(int i = n-2; i >= 0; i--) {
-            int minCost = INT_MAX;
-            
-            for(int inc = 1; i+inc < n && inc <= k; inc++) {
-                int currCost = minCostIndexWise[inc - 1] + abs(arr[i] - arr[i + inc]);
-                minCost = min(minCost, currCost);
-            }
-            
-            for(int j = k-1; j >= 1; j--) {
-                minCostIndexWise[j] = minCostIndexWise[j-1];
-            }
-
-            print(minCostIndexWise);
-            minCostIndexWise[0] = minCost;
-        }
-        
-        return minCostIndexWise[0];
-    }
     public:
     void solve() {
-        int n, k;
-        cin >> n >> k;
+        string testCase;
+        cin >> testCase;
 
-        array(int, v, n);
-        cout<<minimizeCost(k, v);
+        int num1 = testCase[0] - '0';
+        char& op = testCase[1];
+        int num2 = testCase[2] - '0';
+
+        if(num1 < num2)
+            op = '<';
+        else if (num1 > num2)
+            op = '>';
+        else
+            op = '=';
+        
+        cout<<testCase<<endl;
     }
 };
 
@@ -56,7 +42,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

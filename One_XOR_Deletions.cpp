@@ -14,12 +14,30 @@ using namespace std;
 #define exists(map, num) map.find(num) != map.end()
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
-#define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+
+        array(int, v, n);
+        freqMap(int, v);
+
+        int ans = 0;
+        int maxFreq = 0;
+        for(auto& [num, f] : freq) {
+            if(num == 0 || num == 1)
+                continue;
+            ans += f;
+            maxFreq = max(maxFreq, f);
+        }
+        if(maxFreq == 1)
+            pn(ans);
+        ans -= maxFreq;
+        pn(ans);
+
     }
 };
 
