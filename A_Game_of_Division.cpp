@@ -1,13 +1,10 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
 #define MOD 1000000007
 #define int long long
-#define yes {cout<<"YES\n"; return;}
+#define yes {cout<<"YES\n";}
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
@@ -18,34 +15,36 @@ using namespace std;
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, k;
+        cin >> n >> k;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        array(int, v, n);
+        map<int, int> freq;
+        for(int num : v) {
+            num %= k;
+            freq[num]++;
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        for(auto& [num, f] : freq) {
+            // cout<<num<<" : "<<f<<endl;
+            int otherNum = num;
+            f--;
+            otherNum %= k;
+            // cout<<otherNum<<" is "<<num<<endl;
+            if(freq[otherNum] == 0) {
+                yes;
+                for(int i = 0; i < n; i++) {
+                    if(v[i] % k == num)
+                        pn(i+1)
+                }
+            }
+            f++;
         }
-        pn(greetings);
+        no;
 
     }
 };

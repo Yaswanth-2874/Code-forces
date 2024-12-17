@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -21,32 +20,38 @@ using namespace std;
 #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
-class Solution {
+class Solution {  
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, k;
+        cin >> n >> k;
+        string st;
+        cin >> st;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        vector<int> suffixArray(n, 0);
+        priority_queue<int> maxHeap;
+        int ones = 0;
+        for(int i = n-1; i >= 1; i--) {
+            if(st[i] == '1')
+                ones++;
+            else
+                ones--;
+            suffixArray[i] = ones;
+            if(ones > 0)
+                maxHeap.push(ones);
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        
+        int current = 0;
+        int moves = 1;
+        while(!maxHeap.empty() && current < k) {
+            int highest = maxHeap.top();
+            maxHeap.pop();
+            current += highest;
+            moves++;
         }
-        pn(greetings);
-
+        if(current < k)
+            pn(-1);
+        pn(moves)
     }
 };
 

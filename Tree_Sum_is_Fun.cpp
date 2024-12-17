@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -18,35 +15,35 @@ using namespace std;
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
+    int sum(int n, int start) {
+        int sumV = 0;
+        while(n && start) {
+            sumV += start;
+            start /= 2;
+            n--;
+        }
+        return sumV;
+    }
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int x, n;
+        cin >> x >> n;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        int left = 1, right = LLONG_MAX;
+        while(left <= right) {
+            int mid = left + (right - left)/2;
+            int currSum = sum(n, mid);
+            if(currSum == x)
+                pn(mid);
+            if(currSum > x)
+                right = mid - 1;
+            else
+                left = mid+1;
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
-        }
-        pn(greetings);
-
+        pn(-1);
     }
 };
 

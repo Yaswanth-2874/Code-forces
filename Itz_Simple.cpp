@@ -4,8 +4,8 @@ using namespace std;
 #pragma region Macros
 #define MOD 1000000007
 #define int long long
-#define yes {cout<<"YES\n"; return;}
-#define no {cout<<"NO\n"; return;}
+#define yes {cout<<"Ved\n"; return;}
+#define no {cout<<"Varun\n"; return;}
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) {for(auto& num : array) {cout<<num<<" ";} cout<<endl;}
@@ -20,6 +20,20 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n, ved, varun;
+        cin >> n >> ved >> varun;
+
+        array(int, v, n);
+        int sum = accumulate(all(v), 0ll);
+        int maxi = *max_element(all(v));
+        sum -= maxi;
+        varun += sum;
+        ved += maxi;
+        if(varun > ved)
+            no;
+        if(varun < ved)
+            yes;
+        cout<<"Equal"<<endl;
     }
 };
 

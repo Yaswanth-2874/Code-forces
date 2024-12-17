@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -27,26 +26,25 @@ class Solution {
         int n;
         cin >> n;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        array(int, v, n);
+        int total = n;
 
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        freqMap(int, v);
+
+        int ans = 0;
+        for(auto& [c, f] : freq) {
+            if(f == 1)
+                ans++;
         }
 
-        sort(all(moves));
-        int greetings = 0;
+        ans = (ans+1)/2;
+        ans *= 2;
 
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        for(auto& [c, f] : freq) {
+            if(f != 1)
+                ans++;
         }
-        pn(greetings);
-
+        pn(ans)
     }
 };
 

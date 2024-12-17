@@ -10,26 +10,36 @@ using namespace std;
 #define input(array) for(auto& d : array)cin>>d;
 #define print(array) for(int num : array) cout<<num<<" "; cout<<endl;
  
- 
 class Solution {
     public:
     void solve() {
-        int n, l ,r;
-        cin>>n>>r>>l;
- 
-        int index = 1;
-    
-        while(index < l) {
-            cout<<-1<<" ";
-            index++;
+        int n, x, y;
+        cin >> n >> x >> y;
+
+        // max prefix pos is x, so sum after x should be atmost 0
+        // max suffix pos is y, so sum before y should be atmost 0
+
+        // i can simply place all -1 after x and before y
+        // the problem is if there are not enough positive ones, then my answer fails
+        // to fix this, ill try to minimise the negative sum 
+        int curr = -1;
+        if((y-1) % 2 == 0)
+            curr = 1;
+        else
+            curr = -1;
+        
+        for(int i = 1; i < y; i++) {
+            cout<<curr<<" ";
+            curr *= -1;
         }
-        while(index >= l && index <= r) {
+        for(int i = y; i <= x; i++) 
             cout<<1<<" ";
-            index++;
-        }
-        while(index > r  && index <= n) {
-            cout<<-1<<" ";
-            index++;
+
+        // i should start with a negative number
+        curr = -1;
+        for(int i = x+1; i <= n; i++) {
+            cout<<curr<<" ";
+            curr *= -1;
         }
         cout<<endl;
     }

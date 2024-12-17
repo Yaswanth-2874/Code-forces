@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -22,31 +21,32 @@ using namespace std;
 #pragma endregion
 
 class Solution {
+    // Supercharge should kill as many mobs as possible to min moves
+    // kill half the people normally and kill other half using supercharge seems optimal
+
+    //FUCK ME I USED 0 INSTEAD OF 0LL AGAIN!! I NEVER LEARN
     public:
     void solve() {
         int n;
         cin >> n;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        array(int, v, n);
+        sort(all(v));
+        int sum = accumulate(all(v), 0ll);
+        int targetSum = (sum+1)/2;
+        int moves = targetSum;
+        int currentSum = 0;
 
         for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+            currentSum += v[i];
+            if(currentSum > targetSum) {
+                int remainining = n - i;
+                pn(moves + remainining)
+            }
+            if(currentSum == targetSum) {
+                pn(moves + n - i - 1);
+            }
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
-        }
-        pn(greetings);
-
     }
 };
 

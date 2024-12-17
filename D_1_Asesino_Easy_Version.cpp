@@ -38,6 +38,7 @@ class Solution {
         }
         // One out of a and b is a impostor
         // Select one safe member and do the testing
+        // basically i know that one of a, b is a impostor
         int i = 1;
         for(i = 1; i <= n; i++)
             if(i != a && i != b)

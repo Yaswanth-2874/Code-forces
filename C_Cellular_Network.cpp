@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -18,35 +15,40 @@ using namespace std;
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
+    int n, m;
+    bool check(vector<int>& cities, vector<int>& towers, int r) {
+        int left1 = 0, left2 = 0;
+        while(left1 < n && left2 < m) {
+            int lowerRange = towers[left2] - r;
+            int upperRange = towers[left2] + r;
+
+            while(left1 < n && (cities[left1] >= lowerRange && cities[left1] <= upperRange))
+                left1++;
+            if(left1 == n)
+                return 1;
+            left2++;
+        }
+        return 0;
+    }
     public:
     void solve() {
-        int n;
-        cin >> n;
+        cin >> n >> m;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        array(int, cities, n);
+        array(int, routers, m);
 
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        int low = 0, high = 1e15; // guessing this would be safe and avoids overflows
+        while(low <= high) {
+            int mid = low + (high - low)/2;
+            if(check(cities, routers, mid))
+                high = mid - 1;
+            else
+                low = mid + 1;
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
-        }
-        pn(greetings);
-
+        pn(high + 1);
     }
 };
 
@@ -54,7 +56,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

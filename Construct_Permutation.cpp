@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -11,14 +8,13 @@ using namespace std;
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define print(array) {for(auto& num : array) {cout<<num<<" ";} cout<<endl;}
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
 #define exists(map, num) map.find(num) != map.end()
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
@@ -27,26 +23,31 @@ class Solution {
         int n;
         cin >> n;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        int totalSum = (n * (n + 1)) / 2;
+        if(totalSum % (n+1) == 0)
+            pn(-1);
 
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        vector<int> ans(n);
+        int left = 1, right = n;
+        bool leftTurn = true;
+        // for even numbers it is not possible
+        // for odd numbers there are n couples whose sum is (n+1)/2 
+        // i should always isolate these couples
+        // odd even odd even odd ...
+        bool swapi = false;
+        for(int i = 0; i < n/2; i++) {
+            int last = n - (i + 1);
+            ans[i] = i+1;
+            ans[last] = last + 1;
+            if(swapi)
+                swap(ans[i], ans[last]);
+            swapi = !swapi;
         }
+        ans[n/2] = (n+1)/2;
 
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
-        }
-        pn(greetings);
-
+        
+        print(ans)
+        
     }
 };
 

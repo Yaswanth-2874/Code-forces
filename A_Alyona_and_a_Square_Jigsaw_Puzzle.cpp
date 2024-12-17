@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
 #define MOD 1000000007
-#define int long long
+#define int long
 #define yes {cout<<"YES\n"; return;}
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
@@ -27,26 +26,19 @@ class Solution {
         int n;
         cin >> n;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        array(int, v, n);
+        int sum = 0;
+        int ans = 0;
+        
+        for(int& num : v) {
+            sum += num;
+            int rt = sqrtl(sum);
+            if(rt * rt != sum)
+                continue;
+            if(rt % 2 == 1)
+                ans++;
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
-        }
-        pn(greetings);
-
+        pn(ans)
     }
 };
 

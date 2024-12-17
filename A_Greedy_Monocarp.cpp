@@ -1,12 +1,11 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
 #define MOD 1000000007
-#define int long long
+// #define int long long
 #define yes {cout<<"YES\n"; return;}
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
@@ -24,30 +23,32 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+	int n, k;
+	cin >> n >> k;
+	vector<int> a(n);
+	for(int i = 0; i < n; i++){
+		cin >> a[i];
+	}
+	int tota = accumulate(a.begin(), a.end(), 0);
+	if(tota < k) {
+		cout << k - tota << endl;
+		return;
+	}
+	int tot = 0, b = 0;
+	sort(begin(a), end(a), greater<>());
+	for(int i = 0; i < n; i++){
+		if(a[i] == k) {
+			cout << 0 << endl;
+			return;
+		}
+		tot += a[i];
+        b++;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
-        }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
-        }
-        pn(greetings);
-
-    }
+		if(tot >= k) break;
+	}
+	tot -= a[b-1];
+	cout << max(0, k - tot) << endl;
+}
 };
 
 int32_t main() {

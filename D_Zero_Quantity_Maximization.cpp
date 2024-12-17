@@ -17,37 +17,50 @@ using namespace std;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
 #pragma endregion
 
+// Maybe the mistake is not with implementation, logic could be the issue
+
 class Solution {
-    int search(vector<int>& v, int n, int left, int max) {
-        int right = n-1;
-        while(left <= right) {
-            int mid = left + (right - left)/2;
-            if(v[mid] <= max) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
-        }
-        return right;
+    pair<int, int> findOptimal(int a, int b) {
+        bool isNegative = (a < 0) != (b < 0);
+        a = abs(a);
+        b = abs(b);
+        int gcd = __gcd(a, b);
+
+        a /= gcd;
+        b /= gcd;
+        if(isNegative)
+            a *= -1ll;
+
+        // cout<<a<<"/"<<b<<endl;
+        return {a, b};
     }
     public:
     void solve() {
         int n;
         cin >> n;
+        array(int, a, n);
+        array(int, b, n);
+        int maxFreq = 0;
+        int zeroes = 0;
 
-        array(int, v, n);
-        sort(all(v));
-        int maxSize = 0;
-
-        for(int i = 0; i < n-1; i++) {
-            int val = v[i] + v[i+1] - 1;
-            int pos = search(v, n, i, val);
-            // cout<<pos<<endl;
-            int size = pos - i + 1;
-            maxSize = max(maxSize, size);
+        map<pair<int, int>, int> freq;
+        int ans = 0;
+        for(int i = 0; i < n; i++) {
+            if(b[i] == 0) {
+                ans += a[i] == 0;
+                zeroes += a[i] != 0;
+                continue;
+            }
+            if(a[i] == 0) {
+                continue;
+            }
+            auto opt = findOptimal(a[i], b[i]);
+            maxFreq = max(maxFreq, ++freq[{opt}]);
         }
-
-        pn(n - maxSize);
+        maxFreq = max(maxFreq, zeroes);
+          
+        ans += maxFreq;
+        pn(ans);
     }
 };
 
@@ -55,7 +68,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

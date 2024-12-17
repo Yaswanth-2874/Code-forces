@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -18,35 +15,47 @@ using namespace std;
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        string st;
+        cin >> st;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        int sum = 0;
+        map<int, int> count;
 
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        for(char& ch : st) {
+            int num = ch - '0';
+            if(num == 2 || num == 3) {
+                count[num]++;
+            }
+            sum += num;
+        }
+        int mod = sum % 9;
+        if(mod == 0)
+            yes;
+        int target;
+        if(mod % 2 == 0) {
+            target = 18 - mod;
+        } else {
+            target = 9 - mod;
+        }
+        // cout<<target;
+        // cout<<count[3];
+        while(target >= 6 && count[3]) {
+            target -= 6;
+            count[3]--;
         }
 
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        while(target >= 2 && count[2]) {
+            target -= 2;
+            count[2]--;
         }
-        pn(greetings);
-
+        if(target == 0)
+            yes;
+        no;
     }
 };
 

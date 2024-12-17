@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -18,35 +15,43 @@ using namespace std;
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, k;
+        cin >> n >> k;
+        array(int, v, n);
+        int pos = 0, neg = 0;
+        int posCount = 0, negCount = 0;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        for(int num : v) {
+            if(num == 0)
+                continue;
+            if(num > 0) {
+                if(num % k != 0)
+                    posCount++;
+                pos += num/k;
+            } else {
+                num *= -1;
+                neg += (num + k - 1)/k;
+                if(num % k != 0)
+                    negCount++;
+            }
         }
-
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        // cout<<pos<<" "<<neg<<endl;
+        int diff = pos - neg;
+        // cout<<diff<<endl;
+        if(diff == 0)
+            yes;
+        if(diff < 0) {
+            diff += posCount + negCount;
+            if(diff >= 0)
+                yes;
+            no;
         }
-        pn(greetings);
-
+        no;
     }
 };
 

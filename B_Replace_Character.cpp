@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -21,36 +20,57 @@ using namespace std;
 #define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
+vector<int> factorials;
+
 class Solution {
     public:
     void solve() {
         int n;
         cin >> n;
+        string st;
+        cin >> st;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        freqMap(char, st);
+        if(freq.size() == 1)
+            pn(st);
+        int maxFreq = 0, minFreq = LLONG_MAX;
+        char maxChar, minChar;
 
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        for(auto& [ch, f] : freq) {
+            if(maxFreq < f) {
+                maxFreq = f;
+                maxChar = ch;
+            }
+        }
+        for(auto& [ch, f] : freq) {
+            if(minFreq > f && ch != maxChar) {
+                minFreq = f;
+                minChar = ch;
+            }
         }
 
-        sort(all(moves));
-        int greetings = 0;
+        int val1 = factorials[maxFreq] * factorials[minFreq]; // performing no operation
+        int val2 = factorials[minFreq - 1] * factorials[maxFreq + 1]; // performedOperation
 
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        if(val1 >= val2)
+            pn(val1);
+        for(auto& ch : st) {
+            if(ch == minChar) {
+                ch = maxChar;
+                break;
+            }
         }
-        pn(greetings);
-
+        pn(st);
     }
 };
 
 int32_t main() {
+    factorials.push_back(1);
+    int product = 1;
+    for(int i = 1; i <= 10; i++) {
+        product *= i;
+        factorials.push_back(product);
+    }
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;

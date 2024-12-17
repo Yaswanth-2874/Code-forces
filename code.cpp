@@ -8,7 +8,7 @@ using namespace std;
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define print(array) {for(auto& num : array) {cout<<num<<" ";} cout<<endl;}
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
 #define exists(map, num) map.find(num) != map.end()

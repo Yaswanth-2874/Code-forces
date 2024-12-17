@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -18,8 +15,9 @@ using namespace std;
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
+
+// No idea why these are 1500 rated
 
 class Solution {
     public:
@@ -27,26 +25,22 @@ class Solution {
         int n;
         cin >> n;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
-
-        for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+        map<int, int> diffArray;
+        while(n--) {
+            int l, r;
+            cin >> l >> r;
+            l--;
+            diffArray[l]++;
+            diffArray[r]--;
         }
 
-        sort(all(moves));
-        int greetings = 0;
-
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+        int prefix = 0;
+        for(auto& [time, val] : diffArray) {
+            prefix += val;
+            if(prefix > 2)
+                no;
         }
-        pn(greetings);
-
+        yes;
     }
 };
 
@@ -54,7 +48,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

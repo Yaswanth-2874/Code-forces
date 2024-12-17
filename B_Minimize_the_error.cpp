@@ -1,7 +1,4 @@
 #include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
-using namespace __gnu_pbds;
 using namespace std;
 
 #pragma region Macros
@@ -11,42 +8,49 @@ using namespace std;
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define print(array) {for(auto& num : array) {cout<<num<<" ";} cout<<endl;}
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
 #define exists(map, num) map.find(num) != map.end()
 #define array(type, name, size) vector<type> name(size); input(name);
 #define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#define ordered_set tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update>
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, k1, k2;
+        cin >> n >> k1 >> k2;
 
-        vector<pair<int, int>> moves(n);
-        ordered_set stops;
+        array(int, a, n);
+        vector<int> b(n);
+        priority_queue<int> maxHeap;
 
         for(int i = 0; i < n; i++) {
-            cin >> moves[i].first >> moves[i].second;
-            stops.insert(moves[i].second);
+            cin >> b[i];
+            maxHeap.push(abs(a[i] - b[i]));
         }
+        int op = k1 + k2;
 
-        sort(all(moves));
-        int greetings = 0;
+        while(op--) {
+            int top = maxHeap.top();
+            maxHeap.pop();
 
-        for(auto& [start, end] : moves) {
-            auto endPos = stops.lower_bound(end);
-
-            int people = stops.order_of_key(*endPos) ;
-            greetings += people;
-            stops.erase(end);
+            if(top == 0) {
+                top += 1;
+            } else {
+                top -= 1;
+            }
+            maxHeap.push(top);
         }
-        pn(greetings);
-
+        int ans = 0;
+        while(!maxHeap.empty()) {
+            int top = maxHeap.top();
+            maxHeap.pop();
+            ans += top*top;
+        }
+        pn(ans);
     }
 };
 
@@ -54,7 +58,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    // cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

@@ -18,40 +18,52 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    int search(vector<int>& v, int n, int left, int max) {
-        int right = n-1;
-        while(left <= right) {
-            int mid = left + (right - left)/2;
-            if(v[mid] <= max) {
-                left = mid + 1;
-            } else {
-                right = mid - 1;
+    int findSum(vector<int>& permutations) {
+        int sum = 0;
+        // print(permutations);
+        for(int i = 0; i < permutations.size(); i++) {
+            int num = permutations[i];
+            for(int j = i; j < permutations.size(); j++) {
+                num = min(num, permutations[j]);
+                sum += num;
             }
         }
-        return right;
+        return sum;
     }
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, k;
+        cin >> n >> k;
 
-        array(int, v, n);
-        sort(all(v));
-        int maxSize = 0;
-
-        for(int i = 0; i < n-1; i++) {
-            int val = v[i] + v[i+1] - 1;
-            int pos = search(v, n, i, val);
-            // cout<<pos<<endl;
-            int size = pos - i + 1;
-            maxSize = max(maxSize, size);
+        vector<int> permutation;
+        for(int i = 1; i <= n; i++) {
+            permutation.push_back(i);
         }
+        int targetSum = 0;
+        int num = 1;
+        for(int i = n; i >= 1; i--) {
+            targetSum += num * i;
+            num++;
+        }
+        int fact = 5*4*3*2*1;
+        while(fact--) {
+            int sum = findSum(permutation);
+            if(sum == targetSum)
+                print(permutation);
+            next_permutation(all(permutation));
+        }
+        // cout<<targetSum<<endl;
 
-        pn(n - maxSize);
     }
 };
 
 int32_t main() {
+    vector<double> logs(2, 0);
+    double sum = 0;
+    for(int i = 2; i <= 2e5; i++) {
+        sum += log10(i);
+        logs.push_back(sum);
+    }
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;

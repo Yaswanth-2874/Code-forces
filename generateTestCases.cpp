@@ -18,11 +18,13 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        
-        int l = rand() % 10000 + 1;
-        int r = rand() % 10000 + l;
+        int n = rand() % 10 + 2;
+        int l1 = rand() % 10 + 1;
+        int r1 = rand() % 20 + l1;
+        int l2 = rand() % 10 + l1;
+        int r2 = rand() % 20 + l2;
+        cout<<n<<" "<<l1<<" "<<r1<<" "<<l2<<" "<<r2<<endl;
 
-        cout<<l<<" "<<r<<endl;
     }
 };
 
