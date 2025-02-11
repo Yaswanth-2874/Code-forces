@@ -5,6 +5,15 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+        int coins = 1;
+
+        while(n > 3) {
+            coins *= 2;
+            n /= 4;
+        }
+        cout<<coins<<endl;
     }
 };
 

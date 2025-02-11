@@ -8,33 +8,38 @@ using namespace std;
 #define no {cout<<"NO\n"; return;}
 #define all(array) array.begin(), array.end()
 #define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
+#define print(array) {for(auto& num : array) {cout<<num<<" ";} cout<<endl;}
 #define pn(num){cout<<num<<endl; return;}
 #define minHeap(var) var, vector<var>, greater<var>
 #define exists(map, num) map.find(num) != map.end()
-#define array(name, size) vector<int> v(size); input(v);
+#define array(type, name, size) vector<type> name(size); input(name);
+#define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
+#define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
 #pragma endregion
 
 class Solution {
     public:
     void solve() {
-        
-        int k = rand() % 10000 + 1;
-        int n = rand() % 10 + k;
+        int n;
+        cin >> n;
+        array(int, v, n);
 
-        cout<<n<<" "<<k<<endl;
+        sort(all(v));
+        int deductCost = 0, ans = 0;
 
+        for(int& num : v) {
+            ans += max(0ll, num-deductCost);
+            deductCost++;
+        }
+        pn(ans)
     }
 };
 
-
 int32_t main() {
-    srand(static_cast<unsigned int>(time(0)));
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t = 100;
+    int t = 1;
     cin >> t;
-    cout<<t<<endl;
     while (t--) {
         Solution obj;
         obj.solve();

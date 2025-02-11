@@ -18,51 +18,33 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    vector<vector<int>> graph;
-    vector<bool> visited;
-    bool isNotCycle;
-    void dfs(int node, bool& cyclePresent, int parent) {
-        if(visited[node]) {
-            cyclePresent = !isNotCycle;
-            return;
-        }
-        visited[node] = true;
-        if(graph[node].size() > 2)
-            isNotCycle = true;
-        for(int& neighbour : graph[node]) {
-            if(neighbour == parent)
-                continue;
-            dfs(neighbour, cyclePresent, node);
-        }
-    }
     public:
     void solve() {
-        int n, m;
-        cin >> n >> m;
+        int n;
+        cin >> n;
+        string st;
+        cin >> st;
 
-        graph.resize(n);
-        visited.resize(n);
-
-        while(m--) {
-            int u, v;
-            cin >> u >> v;
-            u--;
-            v--;
-
-            graph[u].push_back(v);
-            graph[v].push_back(u);
-        }
-        int count = 0;
+        int smallestS = -1, smallestP = -1;
 
         for(int i = 0; i < n; i++) {
-            bool cyclePresent = false;
-            isNotCycle = false;
-            if(visited[i])
-                continue;
-            dfs(i, cyclePresent, -1);
-            count += cyclePresent;
+            if(st[i] == 'p') {
+                if(smallestP == -1)
+                    smallestP = i;
+            }
+            if(st[i] == 's') {
+                smallestS = i;
+            }
         }
-        pn(count);
+        if(smallestS == -1 || smallestP == -1)
+            yes;
+        int start = 0, end = n;
+
+        if(smallestP == n-1 || smallestS == 0)
+            yes;
+        no;
+
+
     }
 };
 
@@ -70,7 +52,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

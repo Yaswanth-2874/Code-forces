@@ -18,51 +18,49 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    vector<vector<int>> graph;
-    vector<bool> visited;
-    bool isNotCycle;
-    void dfs(int node, bool& cyclePresent, int parent) {
-        if(visited[node]) {
-            cyclePresent = !isNotCycle;
+    int count, k;
+    vector<vector<int>> tree;
+    void dfs(int node, int current, vector<int>& catsPresent, int parent, bool condition) {
+        if(catsPresent[node] == 1) {
+            current++;
+        } else {
+            current = 0;
+        }
+        if(current > k)
+            condition = true;
+        // cout<<"Cats present till "<<node<<" is "<<current<<endl;
+
+        if(tree[node].size() == 1 && parent != -1) {
+            if(!condition)
+                count++;
             return;
         }
-        visited[node] = true;
-        if(graph[node].size() > 2)
-            isNotCycle = true;
-        for(int& neighbour : graph[node]) {
-            if(neighbour == parent)
+        for(int& children : tree[node]) {
+            if(parent == children)
                 continue;
-            dfs(neighbour, cyclePresent, node);
+            
+            dfs(children, current, catsPresent, node, condition);
         }
     }
     public:
     void solve() {
-        int n, m;
-        cin >> n >> m;
+        int n;
+        cin >> n >> k;
+        count = 0;
+        array(int, catsPresent, n);
+        tree.resize(n);
 
-        graph.resize(n);
-        visited.resize(n);
-
-        while(m--) {
+        for(int i = 1; i < n; i++) {
             int u, v;
             cin >> u >> v;
-            u--;
-            v--;
+            u--;v--;
 
-            graph[u].push_back(v);
-            graph[v].push_back(u);
+            tree[u].push_back(v);
+            tree[v].push_back(u);
         }
-        int count = 0;
-
-        for(int i = 0; i < n; i++) {
-            bool cyclePresent = false;
-            isNotCycle = false;
-            if(visited[i])
-                continue;
-            dfs(i, cyclePresent, -1);
-            count += cyclePresent;
-        }
+        dfs(0, 0, catsPresent, -1, false);
         pn(count);
+
     }
 };
 

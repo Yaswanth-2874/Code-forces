@@ -1,21 +1,6 @@
 #include <bits/stdc++.h>
-using namespace std;
-
-#pragma region Macros
-#define MOD 1000000007
 #define int long long
-#define yes {cout<<"YES\n"; return;}
-#define no {cout<<"NO\n"; return;}
-#define all(array) array.begin(), array.end()
-#define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
-#define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#define array(type, name, size) vector<type> name(size); input(name);
-#define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
-#define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#pragma endregion
+using namespace std;
 
 class Solution {
     public:
@@ -23,28 +8,65 @@ class Solution {
         int n;
         cin >> n;
 
-        array(int, drinks, n);
-        array(int, capacity, n);
-
-        vector<int> suffixArray(n);
-        suffixArray[n-1] = capacity[n-1];
-        for(int i = n-2; i >= 0; i--) {
-            suffixArray[i] = suffixArray[i+1] + capacity[i];
+        vector<int> a(n), b(n);
+        for (auto& input : a) {
+            cin >> input;
         }
+        vector<int> prefixSum;
+        vector<int> diffArray(n+1, 0);
+        vector<int> teaDrunk(n, 0);
 
-        print(suffixArray)
+        for (auto& input : b) {
+            cin >> input;
+            if(prefixSum.empty())
+                prefixSum.push_back(input);
+            else 
+                prefixSum.push_back(prefixSum.back() + input);
+        }
+        int extraTea = 0;
 
+        for(int i = 0; i < n; i++) {
+            int tea = a[i] + extraTea;
+            int upperIndex = upper_bound(begin(prefixSum), end(prefixSum), tea) - begin(prefixSum);
+            // tea definitely gets completed at upperBound Index
+            
+            int prev = upperIndex > 0 ? prefixSum[upperIndex - 1] : 0;
+            int remainingTea = tea - prev;
+
+            diffArray[i] += 1;
+            diffArray[upperIndex] -= 1;
+
+            if(upperIndex != n) {
+                // cout<<"Person "<<upperIndex<<" drank extra tea of "<<(remainingTea)<<" from "<<(i+1)<<endl;
+                teaDrunk[upperIndex] += remainingTea;
+            }
+            extraTea += b[i];
+        }
+        int fullDrinks = 0;
+
+        for(int i = 0; i < n; i++) {
+            fullDrinks += diffArray[i];
+
+            teaDrunk[i] += fullDrinks * b[i];
+            cout<<teaDrunk[i]<<" ";
+        }
+        cout<<endl;
     }
 };
 
 int32_t main() {
+
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t = 1;
-    cin >> t;
-    while (t--) {
+    cout.tie(nullptr);
+
+    int testCases = 1;
+    cin >> testCases;
+
+    while (testCases--) {
         Solution obj;
         obj.solve();
     }
+
     return 0; 
 }

@@ -18,51 +18,25 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    vector<vector<int>> graph;
-    vector<bool> visited;
-    bool isNotCycle;
-    void dfs(int node, bool& cyclePresent, int parent) {
-        if(visited[node]) {
-            cyclePresent = !isNotCycle;
-            return;
-        }
-        visited[node] = true;
-        if(graph[node].size() > 2)
-            isNotCycle = true;
-        for(int& neighbour : graph[node]) {
-            if(neighbour == parent)
-                continue;
-            dfs(neighbour, cyclePresent, node);
-        }
-    }
     public:
     void solve() {
         int n, m;
         cin >> n >> m;
 
-        graph.resize(n);
-        visited.resize(n);
+        array(int, devu, n);
+        array(int, bro, m);
 
-        while(m--) {
-            int u, v;
-            cin >> u >> v;
-            u--;
-            v--;
+        sort(all(devu));
+        sort(all(bro), greater<int> ());
+        int ans = 0;
 
-            graph[u].push_back(v);
-            graph[v].push_back(u);
+        for(int i = 0; i < min(n, m); i++) {
+            if(devu[i] >= bro[i])
+                break;
+            ans += bro[i] - devu[i];
         }
-        int count = 0;
 
-        for(int i = 0; i < n; i++) {
-            bool cyclePresent = false;
-            isNotCycle = false;
-            if(visited[i])
-                continue;
-            dfs(i, cyclePresent, -1);
-            count += cyclePresent;
-        }
-        pn(count);
+        pn(ans);
     }
 };
 

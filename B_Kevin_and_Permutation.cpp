@@ -18,51 +18,21 @@ using namespace std;
 #pragma endregion
 
 class Solution {
-    vector<vector<int>> graph;
-    vector<bool> visited;
-    bool isNotCycle;
-    void dfs(int node, bool& cyclePresent, int parent) {
-        if(visited[node]) {
-            cyclePresent = !isNotCycle;
-            return;
-        }
-        visited[node] = true;
-        if(graph[node].size() > 2)
-            isNotCycle = true;
-        for(int& neighbour : graph[node]) {
-            if(neighbour == parent)
-                continue;
-            dfs(neighbour, cyclePresent, node);
-        }
-    }
     public:
     void solve() {
-        int n, m;
-        cin >> n >> m;
+        int n, k;
+        cin >> n >> k;
 
-        graph.resize(n);
-        visited.resize(n);
-
-        while(m--) {
-            int u, v;
-            cin >> u >> v;
-            u--;
-            v--;
-
-            graph[u].push_back(v);
-            graph[v].push_back(u);
+        vector<int> ans(n, -1);
+        int val = 1;
+        for(int i = k-1; i < n; i+=k) {
+            ans[i] = val++;
         }
-        int count = 0;
-
         for(int i = 0; i < n; i++) {
-            bool cyclePresent = false;
-            isNotCycle = false;
-            if(visited[i])
-                continue;
-            dfs(i, cyclePresent, -1);
-            count += cyclePresent;
+            if(ans[i] == -1)
+                ans[i] = val++;
         }
-        pn(count);
+        print(ans)
     }
 };
 
@@ -70,7 +40,7 @@ int32_t main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while (t--) {
         Solution obj;
         obj.solve();

@@ -5,6 +5,10 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+
+        cout<<n+20<<endl;
     }
 };
 
@@ -15,7 +19,7 @@ int32_t main() {
     cout.tie(nullptr);
 
     int testCases = 1;
-    cin >> testCases;
+    // cin >> testCases;
 
     while (testCases--) {
         Solution obj;

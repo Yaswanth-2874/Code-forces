@@ -2,6 +2,9 @@
 #define int long long
 using namespace std;
 
+// Can only remove or add edges in F
+// Can i count number of removals first and then additions? Viceversa??
+
 class Solution {
     class DisjointSet {
         vector<int> parent, size;
@@ -38,35 +41,55 @@ class Solution {
             return size[parentA];
         }
     };
-    
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, m1, m2;
+        cin >> n >> m1 >> m2;
 
-        vector<int> v(n);
-        DisjointSet ds(n);
-        int index = 0;
+        DisjointSet F(n+1), G(n+1);
+        vector<pair<int, int>> fEdges;
 
+        for(int i = 0; i < m1; i++) {
+            int n, m;
+            cin >> n >> m;
 
-        for (auto& input : v) {
-            cin >> input;
-            int val = input - 1;
-            ds.unionMerge(index++, val);
+            fEdges.push_back({n, m});
         }
-        int minOp = 0;
 
-        for(int i = 0; i < n; i++) {
-            if(ds.findParent(i) == i) {
-                minOp += (ds.findSize(i)-1)/2;
+        for(int i = 0; i < m2; i++) {
+            int n, m;
+            cin >> n >> m;
+
+            G.unionMerge(n, m);
+        }
+        int moves = 0;
+
+        for(auto& [u, v] : fEdges) {
+            int uParent = G.findParent(u);
+            int vParent = G.findParent(v);
+
+            // Delete the edge if they are not connected
+            if(uParent != vParent) {
+                moves++;
+            } else {
+                F.unionMerge(u, v);
+            }
+
+        }
+
+        // Now add remainining edges
+
+        int gParents = 0, fParents = 0;
+        for(int i = 1; i <= n; i++) {
+            if(G.findParent(i) == i) {
+                gParents++;
+            }
+            if(F.findParent(i) == i) {
+                fParents++;
             }
         }
-        
-        /* Print number*/ {
-            cout<<minOp<<endl;
-            return;
-        }
 
+        cout<<moves + fParents - gParents<<endl;
 
     }
 };

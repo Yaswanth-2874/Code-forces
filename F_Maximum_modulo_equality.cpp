@@ -1,136 +1,96 @@
 #include <bits/stdc++.h>
+#define int long long
 using namespace std;
 
-#pragma region Macros
-#define MOD 1000000007
-#define int long long
-#define yes {cout<<"YES\n"; return;}
-#define no {cout<<"NO\n"; return;}
-#define all(array) array.begin(), array.end()
-#define input(array) for(auto& d : array)cin>>d;
-#define print(array) for(auto& num : array) cout<<num<<" "; cout<<endl;
-#define pn(num){cout<<num<<endl; return;}
-#define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#define array(type, name, size) vector<type> name(size); input(name);
-#define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
-#define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#pragma endregion
-// To store segment tree
+// using my own segment tree
 
 class Solution {
-        int* st;
-    
-    /*  A recursive function to get gcd of given
-        range of array indexes. The following are parameters for
-        this function.
-    
-        st    --> Pointer to segment tree
-        si --> Index of current node in the segment tree.
-    Initially 0 is passed as root is always at index 0 ss &
-    se  --> Starting and ending indexes of the segment
-                    represented by current node, i.e.,
-    st[index] qs & qe  --> Starting and ending indexes of
-    query range */
-    int findGcd(int ss, int se, int qs, int qe, int si)
-    {
-        if (ss > qe || se < qs)
-            return 0;
-        if (qs <= ss && qe >= se)
-            return st[si];
-        int mid = ss + (se - ss) / 2;
-        return __gcd(findGcd(ss, mid, qs, qe, si * 2 + 1),
-                    findGcd(mid + 1, se, qs, qe, si * 2 + 2));
-    }
-    
-    // Finding The gcd of given Range
-    int findRangeGcd(int ss, int se, int arr[], int n)
-    {
-        if (ss < 0 || se > n - 1 || ss > se) {
-            cout << "Invalid Arguments"
-                << "\n";
-            return -1;
+    class SegmentTree {
+        vector<int> segTree;
+        vector<int> source;
+        public:
+        SegmentTree (int n, vector<int>& source) {
+            segTree.resize(4*n);
+            this->source = source;
+            build(0, 0, source.size() - 1);
         }
-        return findGcd(0, n - 1, ss, se, 0);
-    }
-    
-    // A recursive function that constructs Segment Tree for
-    // array[ss..se]. si is index of current node in segment
-    // tree st
-    int constructST(int arr[], int ss, int se, int si)
-    {
-        if (ss == se) {
-            st[si] = arr[ss];
-            return st[si];
+        void build(int index, int low, int high) {
+            // low and high are ranges, 0 based indexing
+            if(low == high) {
+                segTree[index] = source[low];
+                return;
+            }
+
+            int mid = low + (high - low)/2;
+            build(index * 2 + 1, low, mid);
+            build(index *2 + 2, mid+1, high);
+
+            segTree[index] = gcd(segTree[2 * index + 1], segTree[2 * index + 2]);
         }
-        int mid = ss + (se - ss) / 2;
-        st[si]
-            = __gcd(constructST(arr, ss, mid, si * 2 + 1),
-                    constructST(arr, mid + 1, se, si * 2 + 2));
-        return st[si];
-    }
-    
-    /* Function to construct segment tree from given array.
-    This function allocates memory for segment tree and
-    calls constructSTUtil() to fill the allocated memory */
-    int* constructSegmentTree(int arr[], int n)
-    {
-        int height = (int)(ceil(log2(n)));
-        int size = 2 * (int)pow(2, height) - 1;
-        st = new int[size];
-        constructST(arr, 0, n - 1, 0);
-        return st;
-    }
+        int findVal(int index, int low, int high, int l, int r) {
+            if(l > high || r < low)
+                return 0;
+            if(l <= low && r >= high)
+                return segTree[index];
+            int mid = low + (high - low)/2;
+            int left = findVal(index * 2 + 1, low, mid, l, r);
+            int right = findVal(index * 2 + 2, mid + 1, high, l, r);          
+
+            return gcd(left, right);
+        }
+
+    };
     public:
     void solve() {
         int n, q;
         cin >> n >> q;
-        array(int, v, n);
 
-        int diffArray[n-1];
+        vector<int> v(n);
+        for (auto& input : v) {
+            cin >> input;
+        }
         if(n == 1) {
-            
-            vector<int> ans(q, 0);
             while(q--) {
                 int l, r;
                 cin >> l >> r;
+                cout<<0<<" ";
             }
-            print(ans);
-            return;
+            cout<<endl;
+            return;   
         }
+        vector<int> diff;
         for(int i = 1; i < n; i++) {
-            int diff = abs(v[i] - v[i-1]);
-            diffArray[i-1] = diff;
-            
+            diff.push_back(abs(v[i] - v[i-1]));
         }
+        SegmentTree st(n-1, diff);
 
-        // print(diffArray);
-
-        // testing whether my math is correct or not
-        constructSegmentTree(diffArray, n-1);
         while(q--) {
             int l, r;
             cin >> l >> r;
+            
             if(l == r) {
                 cout<<0<<" ";
                 continue;
             }
-            
-            cout<<findRangeGcd(l-1, r-2, diffArray, n-1)<<" ";
-            
+            cout<<st.findVal(0, 0, n-2, l-1, r-2)<<" ";
         }
         cout<<endl;
     }
 };
 
 int32_t main() {
+
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t = 1;
-    cin >> t;
-    while (t--) {
+    cout.tie(nullptr);
+
+    int testCases = 1;
+    cin >> testCases;
+
+    while (testCases--) {
         Solution obj;
         obj.solve();
     }
+
     return 0; 
 }

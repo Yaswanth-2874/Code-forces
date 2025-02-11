@@ -17,6 +17,8 @@ using namespace std;
 #define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
 #pragma endregion
 
+// Felt challenging af, very good problem
+
 class Solution {
     pair<int, int> findTotal(vector<int>& a, vector<int>& b, int lowerBound) {
         int totalTerms = 0;

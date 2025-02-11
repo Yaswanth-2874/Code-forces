@@ -1,36 +1,62 @@
 #include <bits/stdc++.h>
-using namespace std;
-
-#pragma region Macros
-#define MOD 1000000007
 #define int long long
-#define yes {cout<<"YES\n"; return;}
-#define no {cout<<"NO\n"; return;}
-#define all(array) array.begin(), array.end()
-#define input(array) for(auto& d : array)cin>>d;
-#define print(array) {for(auto& num : array) {cout<<num<<" ";} cout<<endl;}
-#define pn(num){cout<<num<<endl; return;}
-#define minHeap(var) var, vector<var>, greater<var>
-#define exists(map, num) map.find(num) != map.end()
-#define array(type, name, size) vector<type> name(size); input(name);
-#define freqMap(firstType, input) map<firstType, int> freq; for(auto& ele : input) freq[ele]++;
-#define nameFreqMap(firstType, input, name) map<firstType, int> name; for(auto& ele : input) name[ele]++;
-#pragma endregion
+using namespace std;
 
 class Solution {
     public:
     void solve() {
+        int n;
+        cin >> n;
+
+        vector<int> v(n);
+        for (auto& input : v) {
+            cin >> input;
+        }
+
+        int left = 1, right = n-2;
+
+        while(left < right) {
+            int num1 = v[left], prev = v[left - 1], num2 = v[right], next = v[right+1];
+
+            int disturbance1 = (num1 == prev) + (num2 == next);
+            int disturbance2 = (num2 == prev) + (num1 == next);
+
+            if(disturbance2 < disturbance1) {
+                swap(v[left], v[right]);
+            }
+            left++;
+            right--;
+        }
+       
+
+        int disturbance = 0;
+
+        for(int i = 1; i < n; i++) {
+            if(v[i] == v[i-1])
+                disturbance++;
+        }
+        /* Print number*/ {
+            cout<<disturbance<<endl;
+            return;
+        }
+
+
     }
 };
 
 int32_t main() {
+
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t = 1;
-    cin >> t;
-    while (t--) {
+    cout.tie(nullptr);
+
+    int testCases = 1;
+    cin >> testCases;
+
+    while (testCases--) {
         Solution obj;
         obj.solve();
     }
+
     return 0; 
 }

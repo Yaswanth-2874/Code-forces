@@ -5,6 +5,14 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        string st;
+        cin >> st;
+
+        if(st.size() > 10) {
+            cout<<st[0]<<st.size()-2<<st[st.size()-1]<<endl;
+        } else {
+            cout<<st<<endl;
+        }
     }
 };
 

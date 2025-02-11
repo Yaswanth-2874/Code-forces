@@ -12,6 +12,8 @@ using namespace std;
 #define minHeap(var) var, vector<var>, greater<var>
 #define pii pair<int, int>
 
+#include <vector>
+using namespace std;
 
 class Solution {
     vector<int> dijsktra(vector<vector<pii>>& graph) {

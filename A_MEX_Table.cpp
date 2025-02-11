@@ -5,6 +5,10 @@ using namespace std;
 class Solution {
     public:
     void solve() {
+        int n, m;
+        cin >> n >> m;
+
+        cout<<max(n, m) + 1<<endl;
     }
 };
 
