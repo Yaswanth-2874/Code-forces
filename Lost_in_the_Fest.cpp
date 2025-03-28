@@ -13,6 +13,15 @@ class Solution {
             cin >> input;
         }
 
+        int curr = v[n-1];
+        for(int i = 0; i < n; i++) {
+            if(v[i] >= curr) {
+                /* Print number*/ {
+                    cout<<n-i-1<<endl;
+                    return;
+                }
+            }
+        }
     }
 };
 
@@ -20,7 +29,7 @@ int32_t main() {
 
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cout.tie(nullptr);    
+    cout.tie(nullptr);
 
     int testCases = 1;
     cin >> testCases;

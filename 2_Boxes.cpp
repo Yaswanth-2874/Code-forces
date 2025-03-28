@@ -5,14 +5,21 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        int n, m, k;
+        cin >> n >> m >> k;
 
-        vector<int> v(n);
-        for (auto& input : v) {
-            cin >> input;
+        int diff = abs(n - m);
+        int reqd = abs(diff - k);
+
+        if(reqd % 2 != 0)
+            /* Print number*/ {
+                cout<<-1<<endl;
+                return;
+            }
+        /* Print number*/ {
+            cout<<reqd/2<<endl;
+            return;
         }
-
     }
 };
 
@@ -20,7 +27,7 @@ int32_t main() {
 
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cout.tie(nullptr);    
+    cout.tie(nullptr);
 
     int testCases = 1;
     cin >> testCases;

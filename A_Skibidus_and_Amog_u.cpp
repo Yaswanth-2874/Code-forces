@@ -5,14 +5,14 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        string st;
+        cin >> st;
 
-        vector<int> v(n);
-        for (auto& input : v) {
-            cin >> input;
-        }
+        st.pop_back();
+        st.pop_back();
+        st.push_back('i');
 
+        cout<<st<<endl;
     }
 };
 
@@ -20,7 +20,7 @@ int32_t main() {
 
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cout.tie(nullptr);    
+    cout.tie(nullptr);
 
     int testCases = 1;
     cin >> testCases;

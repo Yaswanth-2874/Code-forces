@@ -5,14 +5,18 @@ using namespace std;
 class Solution {
     public:
     void solve() {
-        int n;
-        cin >> n;
+        double l, r, d, u;
+        cin >> l >> r >> d >> u;
 
-        vector<int> v(n);
-        for (auto& input : v) {
-            cin >> input;
+        if(l == r && r ==d && r == u)
+            /* Print yes*/ {
+                cout<<"YES\n";
+                return;
+            }
+        /* Print no*/ {
+            cout<<"NO\n";
+            return;
         }
-
     }
 };
 
@@ -20,7 +24,7 @@ int32_t main() {
 
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    cout.tie(nullptr);    
+    cout.tie(nullptr);
 
     int testCases = 1;
     cin >> testCases;
